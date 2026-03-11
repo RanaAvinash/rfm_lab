@@ -8,7 +8,7 @@ import networkx as nx
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
-
+from modules.clustering import perform_kmeans
 from modules.data_simulator import simulate_data
 from modules.rfm_engine import compute_rfm
 from modules.segmentation import segment_customers
