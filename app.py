@@ -36,7 +36,42 @@ page = st.sidebar.radio(
         "Automated Report"
     ]
 )
+# -------------------------------------------------
+# Dashboard
+# -------------------------------------------------
 
+elif page == "Dashboard":
+
+    rfm = st.session_state.get("rfm")
+
+    if rfm is None:
+        st.info("Run RFM Analysis first.")
+        st.stop()
+
+    st.header("CRM Analytics Dashboard")
+
+    col1,col2,col3,col4 = st.columns(4)
+
+    col1.metric("Customers",len(rfm))
+    col2.metric("Revenue",round(rfm.Monetary.sum(),2))
+    col3.metric("Avg Customer Value",round(rfm.Monetary.mean(),2))
+    col4.metric("Avg Frequency",round(rfm.Frequency.mean(),2))
+
+    seg = rfm["Segment"].value_counts().reset_index()
+    seg.columns = ["Segment","Customers"]
+
+    fig = px.pie(seg,values="Customers",names="Segment")
+    st.plotly_chart(fig,use_container_width=True)
+
+    fig = px.scatter(
+        rfm,
+        x="Recency",
+        y="Frequency",
+        size="Monetary",
+        color="Segment"
+    )
+
+    st.plotly_chart(fig,use_container_width=True)
 # -------------------------------------------------
 # Data generation
 # -------------------------------------------------
