@@ -39,7 +39,6 @@ page = st.sidebar.radio(
 # -------------------------------------------------
 # Dashboard
 # -------------------------------------------------
-
 elif page == "Dashboard":
 
     rfm = st.session_state.get("rfm")
