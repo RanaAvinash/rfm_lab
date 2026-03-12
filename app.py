@@ -58,13 +58,21 @@ if page == "Generate Data":
 
 elif page == "Upload Data":
 
+    st.header("Upload Retail Dataset")
+
     file = st.file_uploader("Upload CSV")
 
     if file:
 
         df = pd.read_csv(file)
 
+        df["InvoiceDate"] = pd.to_datetime(df["InvoiceDate"])
+
         st.session_state["data"] = df
+
+        st.success("Dataset loaded successfully")
+
+        st.dataframe(df.head())
 
 
 # -------------------------------------------------
